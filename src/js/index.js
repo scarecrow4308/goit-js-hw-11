@@ -51,7 +51,7 @@ loadMoreBtn.addEventListener('click', async () => {
   images.page++;
 
   loadMoreBtn.disabled = true;
-  setTimeout(() => (loadMoreBtn.disabled = true), 1000);
+  setTimeout(() => (loadMoreBtn.disabled = false), 1000);
 
   let data = await images.fetchPhotos();
   getImages(data);
