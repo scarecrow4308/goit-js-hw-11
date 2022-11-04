@@ -6,8 +6,14 @@ import { ImageClass } from './fetchImages';
 
 const formEl = document.querySelector('.header__search-form');
 const loadMoreBtn = document.querySelector('.load-more');
+const searchBtn = document.querySelector('.header__search-btn');
+const inputEl = document.querySelector('.header__input');
 const galleryEl = document.querySelector('.gallery');
 const images = new ImageClass();
+
+inputEl.addEventListener('input', () => {
+  searchBtn.disabled = false;
+});
 
 const getImages = data => {
   const { hits, totalHits, total } = data;
@@ -43,7 +49,7 @@ const removeLoadMoreBtn = () => {
 
 loadMoreBtn.addEventListener('click', async () => {
   images.page++;
-  let data = await images.fetchPhotos(40);
+  let data = await images.fetchPhotos();
   getImages(data);
   removeLoadMoreBtn();
 });
@@ -51,12 +57,12 @@ loadMoreBtn.addEventListener('click', async () => {
 const onSubmit = async e => {
   e.preventDefault();
 
-  const inputEl = formEl.querySelector('.header__input');
+  searchBtn.disabled = true;
 
   images.query = inputEl.value;
   images.page = 1;
 
-  const data = await images.fetchPhotos(20);
+  const data = await images.fetchPhotos();
 
   galleryEl.innerHTML = '';
 

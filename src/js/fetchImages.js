@@ -8,17 +8,16 @@ export class ImageClass {
     this.page = 1;
     this.totalHits = null;
     this.total_pages = 0;
-    this.per_page = 20;
+    this.per_page = 40;
   }
-  async fetchPhotos(count) {
-    this.per_page = count;
+  async fetchPhotos() {
     try {
       const { data } = await axios.get(this.#BASE_URL, {
         params: {
           q: this.query,
           page: this.page,
           per_page: this.per_page,
-          orientation: 'vertical',
+          orientation: 'horizontal',
           key: this.#API_KEY,
         },
       });
