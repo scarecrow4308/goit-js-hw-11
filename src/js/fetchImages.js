@@ -10,7 +10,8 @@ export class ImageClass {
     this.total_pages = 0;
     this.per_page = 20;
   }
-  async fetchPhotos() {
+  async fetchPhotos(count) {
+    this.per_page = count;
     try {
       const { data } = await axios.get(this.#BASE_URL, {
         params: {

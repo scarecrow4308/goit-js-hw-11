@@ -33,16 +33,18 @@ const getImages = data => {
 const removeLoadMoreBtn = () => {
   if (images.page === images.total_pages) {
     loadMoreBtn.classList.add('visually-hidden');
+    Notiflix.Notify.warning(
+      "We're sorry, but you've reached the end of search results"
+    );
   }
+
   return;
 };
 
 loadMoreBtn.addEventListener('click', async () => {
   images.page++;
-  const data = await images.fetchPhotos();
-
+  let data = await images.fetchPhotos(40);
   getImages(data);
-
   removeLoadMoreBtn();
 });
 
@@ -54,7 +56,7 @@ const onSubmit = async e => {
   images.query = inputEl.value;
   images.page = 1;
 
-  const data = await images.fetchPhotos();
+  const data = await images.fetchPhotos(20);
 
   galleryEl.innerHTML = '';
 
@@ -63,6 +65,7 @@ const onSubmit = async e => {
   if (data.totalHits > 1) {
     Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
   }
+
   removeLoadMoreBtn();
 };
 
